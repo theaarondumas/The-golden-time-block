@@ -1,96 +1,121 @@
 :root{
-  --bg:#0b0b0f;
-  --card:#12121a;
-  --muted:#9aa0a6;
-  --text:#f1f3f4;
-  --border:#242434;
+  /* ====== THE TECHNICIAN POSTER PALETTE ======
+     sampled vibe: deep noir violet + neon cyan + magenta + warm peach glow
+  */
+  --bg:#170519;          /* deep noir */
+  --card:#221132;        /* dark violet card */
+  --card2:#2C1533;       /* slightly brighter violet */
+  --muted:#CFA3B8;       /* soft pink-lavender */
+  --text:#F7E7F2;        /* warm near-white */
+  --border:#3A1B44;      /* purple border */
 
-  --cc:#2f7fff;        /* Crash Cart (blue) */
-  --jkd:#2ecc71;       /* JKD (green) */
-  --rt:#f5a623;        /* Resistance (orange) */
-  --tech:#b36bff;      /* Technician (purple) */
-  --work:#6b7280;      /* Work (grey) */
-  --neutral:#444c56;
+  --glowCyan:#49C4D4;    /* neon cyan (title vibe) */
+  --glowPink:#D75071;    /* magenta/pink glow */
+  --glowPeach:#F3A887;   /* warm highlight */
+  --glowPurple:#564675;  /* mid purple */
+
+  /* Category colors (still map to your legend) */
+  --cc:var(--glowCyan);       /* Crash Cart */
+  --jkd:#2ECC71;              /* keep green for JKD readability */
+  --rt:#F5A623;               /* keep orange for resistance clarity */
+  --tech:#B36BFF;             /* keep purple, but it harmonizes */
+  --work:#6B7280;             /* neutral grey */
+  --neutral:#4A2A57;          /* violet neutral */
 }
 
+/* Base */
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  background:var(--bg);
   color:var(--text);
+
+  /* Poster-style neon gradient background */
+  background:
+    radial-gradient(1200px 800px at 75% 20%, rgba(73,196,212,.25), transparent 55%),
+    radial-gradient(900px 700px at 15% 80%, rgba(215,80,113,.30), transparent 60%),
+    radial-gradient(900px 700px at 55% 95%, rgba(243,168,135,.20), transparent 60%),
+    linear-gradient(180deg, #120316 0%, #170519 55%, #2A0C2A 100%);
 }
 
+/* Header */
 .top{
   padding:18px 16px;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid rgba(73,196,212,.18);
   display:flex;
   gap:12px;
   justify-content:space-between;
   align-items:flex-start;
+  backdrop-filter: blur(6px);
 }
-h1{margin:0;font-size:20px}
-.sub{margin:6px 0 0;color:var(--muted);font-size:13px}
+h1{margin:0;font-size:20px; letter-spacing:.2px}
+.sub{margin:6px 0 0;color:rgba(247,231,242,.75);font-size:13px}
 
+/* Buttons */
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .btn{
-  border:1px solid var(--border);
-  background:var(--card);
+  border:1px solid rgba(73,196,212,.25);
+  background:linear-gradient(180deg, rgba(44,21,51,.9), rgba(34,17,50,.9));
   color:var(--text);
   padding:10px 12px;
-  border-radius:10px;
+  border-radius:12px;
   font-size:13px;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 .btn:active{transform:scale(.98)}
-.btnWarn{border-color:#7a5d00}
-.btnDanger{border-color:#7a0000}
+.btn:hover{
+  box-shadow: 0 0 24px rgba(73,196,212,.15);
+}
+.btnWarn{border-color:rgba(243,168,135,.35)}
+.btnDanger{border-color:rgba(215,80,113,.45)}
 
 .wrap{padding:16px; max-width:900px; margin:0 auto}
 
+/* Legend chips */
 .legend{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
 .chip{
   padding:6px 10px;
   border-radius:999px;
   font-size:12px;
-  background:var(--card);
-  border:1px solid var(--border);
+  background:rgba(34,17,50,.75);
+  border:1px solid rgba(247,231,242,.10);
 }
-.chip.cc{border-color:rgba(47,127,255,.45)}
+.chip.cc{border-color:rgba(73,196,212,.45)}
 .chip.jkd{border-color:rgba(46,204,113,.45)}
 .chip.rt{border-color:rgba(245,166,35,.45)}
 .chip.tech{border-color:rgba(179,107,255,.45)}
 .chip.work{border-color:rgba(107,114,128,.45)}
-.chip.neutral{border-color:rgba(68,76,86,.45)}
+.chip.neutral{border-color:rgba(74,42,87,.55)}
 
+/* Totals panel */
 .totals{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
+  background:linear-gradient(180deg, rgba(34,17,50,.78), rgba(44,21,51,.65));
+  border:1px solid rgba(73,196,212,.16);
+  border-radius:16px;
   padding:12px;
   margin-bottom:12px;
-  color:var(--muted);
+  color:rgba(247,231,242,.75);
   font-size:13px;
+  box-shadow: 0 0 40px rgba(215,80,113,.08);
 }
 
-.tabs{
-  display:flex; gap:8px; flex-wrap:wrap;
-  margin-bottom:12px;
-}
+/* Tabs */
+.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
 .tab{
   padding:10px 12px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:var(--card);
+  border-radius:14px;
+  border:1px solid rgba(247,231,242,.12);
+  background:rgba(34,17,50,.75);
   color:var(--text);
   font-size:13px;
 }
-.tab.active{outline:2px solid rgba(255,255,255,.12)}
-
-.day{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+.tab.active{
+  border-color: rgba(73,196,212,.38);
+  box-shadow: 0 0 26px rgba(73,196,212,.12);
 }
+
+/* Day blocks */
+.day{display:flex; flex-direction:column; gap:10px}
 .dayTitle{
   display:flex;
   justify-content:space-between;
@@ -99,13 +124,13 @@ h1{margin:0;font-size:20px}
   margin:6px 2px 2px;
 }
 .dayTitle h2{margin:0;font-size:16px}
-.dayTitle .meta{color:var(--muted);font-size:13px}
+.dayTitle .meta{color:rgba(247,231,242,.72);font-size:13px}
 
 .block{
-  background:var(--card);
-  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(34,17,50,.82), rgba(44,21,51,.62));
+  border:1px solid rgba(247,231,242,.10);
   border-left:8px solid var(--neutral);
-  border-radius:14px;
+  border-radius:16px;
   padding:12px;
   display:flex;
   gap:12px;
@@ -114,40 +139,46 @@ h1{margin:0;font-size:20px}
   user-select:none;
 }
 .block:active{transform:scale(.995)}
+.block:hover{
+  box-shadow: 0 0 30px rgba(215,80,113,.10);
+}
 .block.done{
-  opacity:.6;
-  filter:saturate(.6);
+  opacity:.55;
+  filter:saturate(.75);
   text-decoration:line-through;
 }
+
 .time{
   min-width:110px;
   color:var(--text);
-  font-weight:600;
+  font-weight:700;
   font-size:13px;
 }
 .info{flex:1}
 .title{margin:0 0 4px; font-size:14px}
-.focus{margin:0; color:var(--muted); font-size:13px}
+.focus{margin:0; color:rgba(247,231,242,.72); font-size:13px}
 
+/* Badges */
 .badge{
   font-size:12px;
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid var(--border);
+  border:1px solid rgba(247,231,242,.12);
   color:var(--text);
   white-space:nowrap;
+  background:rgba(18,3,22,.25);
 }
+.badge.cc{border-color:rgba(73,196,212,.55)}
+.badge.jkd{border-color:rgba(46,204,113,.55)}
+.badge.rt{border-color:rgba(245,166,35,.55)}
+.badge.tech{border-color:rgba(179,107,255,.55)}
+.badge.work{border-color:rgba(107,114,128,.55)}
+.badge.neutral{border-color:rgba(74,42,87,.75)}
 
+/* Left border category colors */
 .ccL{border-left-color:var(--cc)}
 .jkdL{border-left-color:var(--jkd)}
 .rtL{border-left-color:var(--rt)}
 .techL{border-left-color:var(--tech)}
 .workL{border-left-color:var(--work)}
 .neutralL{border-left-color:var(--neutral)}
-
-.badge.cc{border-color:rgba(47,127,255,.5)}
-.badge.jkd{border-color:rgba(46,204,113,.5)}
-.badge.rt{border-color:rgba(245,166,35,.5)}
-.badge.tech{border-color:rgba(179,107,255,.5)}
-.badge.work{border-color:rgba(107,114,128,.5)}
-.badge.neutral{border-color:rgba(68,76,86,.5)}
