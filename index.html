@@ -27,6 +27,7 @@
     <div class="actions">
       <button id="btnToday" class="btn">Today</button>
       <button id="btnMission" class="btn btnGlow">Mission</button>
+      <button id="btnKPIs" class="btn">KPIs</button>
       <button id="btnResetDay" class="btn btnWarn">Reset Day</button>
       <button id="btnResetAll" class="btn btnDanger">Reset Week</button>
     </div>
@@ -53,6 +54,30 @@
     Built with discipline. Powered by consistency.<br>
     <span class="footerMark">THE TECHNICIAN</span>
   </footer>
+
+  <!-- KPI Overlay -->
+  <div id="kpiOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Quarterly KPIs">
+    <div class="overlayCard">
+      <div class="overlayTop">
+        <div>
+          <div class="overlayTitle">Quarterly KPIs</div>
+          <div class="overlaySub">Track execution, not feelings.</div>
+        </div>
+        <button id="btnCloseKPIs" class="smallBtn">Close</button>
+      </div>
+
+      <div class="kpiControls">
+        <div class="kpiPills" id="kpiQuarterPills"></div>
+        <div class="kpiSummary" id="kpiSummary"></div>
+      </div>
+
+      <div class="kpiSections" id="kpiSections"></div>
+
+      <div class="kpiBottom">
+        <button id="btnResetQuarterKPIs" class="btn btnWarn">Reset Quarter KPIs</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
   <script>
