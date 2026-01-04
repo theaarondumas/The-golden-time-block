@@ -1,36 +1,30 @@
 :root{
-  /* ====== THE TECHNICIAN POSTER PALETTE ======
-     sampled vibe: deep noir violet + neon cyan + magenta + warm peach glow
-  */
-  --bg:#170519;          /* deep noir */
-  --card:#221132;        /* dark violet card */
-  --card2:#2C1533;       /* slightly brighter violet */
-  --muted:#CFA3B8;       /* soft pink-lavender */
-  --text:#F7E7F2;        /* warm near-white */
-  --border:#3A1B44;      /* purple border */
+  /* THE TECHNICIAN POSTER PALETTE */
+  --bg:#170519;
+  --card:#221132;
+  --card2:#2C1533;
+  --muted:#CFA3B8;
+  --text:#F7E7F2;
+  --border:#3A1B44;
 
-  --glowCyan:#49C4D4;    /* neon cyan (title vibe) */
-  --glowPink:#D75071;    /* magenta/pink glow */
-  --glowPeach:#F3A887;   /* warm highlight */
-  --glowPurple:#564675;  /* mid purple */
+  --glowCyan:#49C4D4;
+  --glowPink:#D75071;
+  --glowPeach:#F3A887;
+  --glowPurple:#564675;
 
-  /* Category colors (still map to your legend) */
-  --cc:var(--glowCyan);       /* Crash Cart */
-  --jkd:#2ECC71;              /* keep green for JKD readability */
-  --rt:#F5A623;               /* keep orange for resistance clarity */
-  --tech:#B36BFF;             /* keep purple, but it harmonizes */
-  --work:#6B7280;             /* neutral grey */
-  --neutral:#4A2A57;          /* violet neutral */
+  --cc:var(--glowCyan);
+  --jkd:#2ECC71;   /* readable green */
+  --rt:#F5A623;    /* readable orange */
+  --tech:#B36BFF;  /* violet */
+  --work:#6B7280;  /* grey */
+  --neutral:#4A2A57;
 }
 
-/* Base */
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   color:var(--text);
-
-  /* Poster-style neon gradient background */
   background:
     radial-gradient(1200px 800px at 75% 20%, rgba(73,196,212,.25), transparent 55%),
     radial-gradient(900px 700px at 15% 80%, rgba(215,80,113,.30), transparent 60%),
@@ -38,7 +32,6 @@ body{
     linear-gradient(180deg, #120316 0%, #170519 55%, #2A0C2A 100%);
 }
 
-/* Header */
 .top{
   padding:18px 16px;
   border-bottom:1px solid rgba(73,196,212,.18);
@@ -48,10 +41,9 @@ body{
   align-items:flex-start;
   backdrop-filter: blur(6px);
 }
-h1{margin:0;font-size:20px; letter-spacing:.2px}
+h1{margin:0;font-size:20px; letter-spacing:.8px}
 .sub{margin:6px 0 0;color:rgba(247,231,242,.75);font-size:13px}
 
-/* Buttons */
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .btn{
   border:1px solid rgba(73,196,212,.25);
@@ -60,18 +52,20 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
   padding:10px 12px;
   border-radius:12px;
   font-size:13px;
-  box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 .btn:active{transform:scale(.98)}
-.btn:hover{
-  box-shadow: 0 0 24px rgba(73,196,212,.15);
-}
+.btn:hover{box-shadow: 0 0 24px rgba(73,196,212,.15)}
 .btnWarn{border-color:rgba(243,168,135,.35)}
 .btnDanger{border-color:rgba(215,80,113,.45)}
 
+/* Mission button glow */
+.btnGlow{
+  border-color: rgba(73,196,212,.45);
+  box-shadow: 0 0 22px rgba(73,196,212,.12);
+}
+
 .wrap{padding:16px; max-width:900px; margin:0 auto}
 
-/* Legend chips */
 .legend{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
 .chip{
   padding:6px 10px;
@@ -87,7 +81,6 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
 .chip.work{border-color:rgba(107,114,128,.45)}
 .chip.neutral{border-color:rgba(74,42,87,.55)}
 
-/* Totals panel */
 .totals{
   background:linear-gradient(180deg, rgba(34,17,50,.78), rgba(44,21,51,.65));
   border:1px solid rgba(73,196,212,.16);
@@ -99,7 +92,31 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
   box-shadow: 0 0 40px rgba(215,80,113,.08);
 }
 
-/* Tabs */
+/* Mission banner */
+.missionBanner{
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(73,196,212,.22);
+  background: linear-gradient(180deg, rgba(34,17,50,.72), rgba(44,21,51,.55));
+  color: rgba(247,231,242,.78);
+  font-size: 13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.missionBanner b{ color: var(--glowCyan); letter-spacing:.3px; }
+.smallBtn{
+  border:1px solid rgba(247,231,242,.12);
+  background: rgba(18,3,22,.22);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.smallBtn:active{ transform: scale(.98); }
+
 .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
 .tab{
   padding:10px 12px;
@@ -114,7 +131,6 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
   box-shadow: 0 0 26px rgba(73,196,212,.12);
 }
 
-/* Day blocks */
 .day{display:flex; flex-direction:column; gap:10px}
 .dayTitle{
   display:flex;
@@ -139,26 +155,18 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
   user-select:none;
 }
 .block:active{transform:scale(.995)}
-.block:hover{
-  box-shadow: 0 0 30px rgba(215,80,113,.10);
-}
+.block:hover{box-shadow: 0 0 30px rgba(215,80,113,.10)}
 .block.done{
   opacity:.55;
   filter:saturate(.75);
   text-decoration:line-through;
 }
 
-.time{
-  min-width:110px;
-  color:var(--text);
-  font-weight:700;
-  font-size:13px;
-}
+.time{min-width:110px; color:var(--text); font-weight:700; font-size:13px}
 .info{flex:1}
 .title{margin:0 0 4px; font-size:14px}
 .focus{margin:0; color:rgba(247,231,242,.72); font-size:13px}
 
-/* Badges */
 .badge{
   font-size:12px;
   padding:6px 10px;
@@ -175,10 +183,18 @@ h1{margin:0;font-size:20px; letter-spacing:.2px}
 .badge.work{border-color:rgba(107,114,128,.55)}
 .badge.neutral{border-color:rgba(74,42,87,.75)}
 
-/* Left border category colors */
 .ccL{border-left-color:var(--cc)}
 .jkdL{border-left-color:var(--jkd)}
 .rtL{border-left-color:var(--rt)}
 .techL{border-left-color:var(--tech)}
 .workL{border-left-color:var(--work)}
 .neutralL{border-left-color:var(--neutral)}
+
+.footer{
+  text-align:center;
+  padding:18px 12px 28px;
+  color:rgba(247,231,242,.55);
+  font-size:12px;
+  letter-spacing:.3px;
+}
+.footerMark{color:var(--glowCyan)}
