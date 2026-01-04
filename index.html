@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Technician — Weekly Discipline</title>
 
-  <!-- iOS / App Feel -->
+  <!-- iOS App Feel -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Technician">
@@ -14,7 +14,6 @@
   <meta name="theme-color" content="#170519">
   <link rel="manifest" href="manifest.json">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -34,7 +33,7 @@
   </header>
 
   <main class="wrap">
-    <section class="legend">
+    <section class="legend" id="legend">
       <span class="chip cc">Crash Cart</span>
       <span class="chip jkd">JKD</span>
       <span class="chip rt">Resistance</span>
@@ -50,14 +49,13 @@
     <section class="day" id="dayView" aria-live="polite"></section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" id="footer">
     Built with discipline. Powered by consistency.<br>
     <span class="footerMark">THE TECHNICIAN</span>
   </footer>
 
   <script src="app.js"></script>
   <script>
-    // Offline support
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () =>
         navigator.serviceWorker.register("./service-worker.js").catch(()=>{})
