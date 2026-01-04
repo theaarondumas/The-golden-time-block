@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#111111" />
+  <title>Weekly Time Blocks</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Weekly Time Blocks</h1>
+      <p class="sub">Tap a block to toggle ✅ complete. Saved automatically.</p>
+    </div>
+    <div class="actions">
+      <button id="btnToday" class="btn">Jump to Today</button>
+      <button id="btnResetDay" class="btn btnWarn">Reset Today</button>
+      <button id="btnResetAll" class="btn btnDanger">Reset All</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="legend">
+      <span class="chip cc">Crash Cart</span>
+      <span class="chip jkd">JKD</span>
+      <span class="chip rt">Resistance</span>
+      <span class="chip tech">Technician</span>
+      <span class="chip work">Work</span>
+      <span class="chip neutral">Other</span>
+    </section>
+
+    <section class="totals" id="totals"></section>
+
+    <section class="tabs" id="tabs"></section>
+
+    <section class="day" id="dayView"></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
