@@ -1,17 +1,19 @@
-// Simple offline cache for The Technician app
-const CACHE_NAME = "technician-app-v1";
+const CACHE_NAME = "technician-app-v3";
 const ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
-  "./manifest.json"
+  "./manifest.json",
+  "./service-worker.js",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+      .then(cache => cache.addAll(ASSETS).catch(()=>cache.addAll(ASSETS.filter(x=>!x.includes("icon-")))))
       .then(() => self.skipWaiting())
   );
 });
