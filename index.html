@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Core -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Technician — Weekly Discipline</title>
@@ -10,21 +9,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Technician">
-  <link rel="apple-touch-icon" href="icon-192.png">
 
-  <!-- Theme -->
+  <!-- PWA -->
   <meta name="theme-color" content="#170519">
-
-  <!-- Typography polish -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="manifest" href="manifest.json">
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- ===== HEADER ===== -->
   <header class="top">
     <div>
       <h1>THE TECHNICIAN</h1>
@@ -33,15 +27,13 @@
 
     <div class="actions">
       <button id="btnToday" class="btn">Today</button>
+      <button id="btnMission" class="btn btnGlow">Mission</button>
       <button id="btnResetDay" class="btn btnWarn">Reset Day</button>
       <button id="btnResetAll" class="btn btnDanger">Reset Week</button>
     </div>
   </header>
 
-  <!-- ===== MAIN ===== -->
   <main class="wrap">
-
-    <!-- LEGEND -->
     <section class="legend">
       <span class="chip cc">Crash Cart</span>
       <span class="chip jkd">JKD</span>
@@ -51,36 +43,26 @@
       <span class="chip neutral">Other</span>
     </section>
 
-    <!-- WEEK TOTALS -->
-    <section class="totals" id="totals">
-      <!-- injected by app.js -->
-    </section>
+    <section class="totals" id="totals"></section>
 
-    <!-- DAY TABS -->
-    <nav class="tabs" id="tabs" aria-label="Days of the week">
-      <!-- injected by app.js -->
-    </nav>
+    <nav class="tabs" id="tabs" aria-label="Days of the week"></nav>
 
-    <!-- DAY VIEW -->
-    <section class="day" id="dayView" aria-live="polite">
-      <!-- injected by app.js -->
-    </section>
-
+    <section class="day" id="dayView" aria-live="polite"></section>
   </main>
 
-  <!-- ===== FOOTER / IDENTITY ===== -->
-  <footer style="
-    text-align:center;
-    padding:18px 12px 28px;
-    color:rgba(247,231,242,.55);
-    font-size:12px;
-    letter-spacing:.3px;
-  ">
+  <footer class="footer">
     Built with discipline. Powered by consistency.<br>
-    <span style="color:#49C4D4;">THE TECHNICIAN</span>
+    <span class="footerMark">THE TECHNICIAN</span>
   </footer>
 
-  <!-- Logic -->
   <script src="app.js"></script>
+  <script>
+    // Offline support
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () =>
+        navigator.serviceWorker.register("./service-worker.js").catch(()=>{})
+      );
+    }
+  </script>
 </body>
 </html>
