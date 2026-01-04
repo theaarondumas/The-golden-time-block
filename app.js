@@ -1,9 +1,10 @@
 // THE TECHNICIAN — Weekly Discipline
-// Tap-to-complete + Mission Mode (simple UI) + Streaks + KPI Dashboard (Quarterly)
-const STORAGE_KEY = "technician_weekly_timeblocks_v3";
-const MODE_KEY = "technician_mission_mode_v3";
-const STREAK_BEST_KEY = "technician_best_streak_v3";
+// Tap-to-complete + Mission Mode (simple UI) + Streaks + KPI Dashboard + Haptics + Mission Complete
+const STORAGE_KEY = "technician_weekly_timeblocks_v4";
+const MODE_KEY = "technician_mission_mode_v4";
+const STREAK_BEST_KEY = "technician_best_streak_v4";
 const KPI_KEY = "technician_kpis_v1";
+const ACTIVE_Q_KEY = "technician_active_quarter_v1";
 
 const CATS = {
   crash: { label: "Crash Cart", badge: "cc", left: "ccL" },
@@ -49,6 +50,8 @@ const SCHEDULE = {
     { time:"(Optional) 1 hr", title:"Resistance", focus:"Light pump + mobility", cat:"rt" }
   ]
 };
+
+// Clone repeating days
 SCHEDULE.Wed = structuredClone(SCHEDULE.Mon);
 SCHEDULE.Fri = structuredClone(SCHEDULE.Mon);
 SCHEDULE.Thu = structuredClone(SCHEDULE.Tue);
@@ -154,8 +157,8 @@ let state = loadState();
 let selectedDay = dayKeyToday();
 let missionMode = loadMissionMode();
 
-let kpiState = loadKpis(); // { Q1: { crash:{0:true}, technician:{}, body:{} }, ... }
-let activeQuarter = loadActiveQuarter(); // "Q1" etc
+let kpiState = loadKpis(); // {Q1:{crash:{0:true}, technician:{}, body:{}}, ...}
+let activeQuarter = loadActiveQuarter();
 
 // ===== Elements =====
 const tabsEl = document.getElementById("tabs");
@@ -166,6 +169,29 @@ const kpiOverlay = document.getElementById("kpiOverlay");
 const kpiQuarterPills = document.getElementById("kpiQuarterPills");
 const kpiSummary = document.getElementById("kpiSummary");
 const kpiSections = document.getElementById("kpiSections");
+
+// ===== Haptics + Mission Complete =====
+function haptic(ms = 20){
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+function showMissionComplete(){
+  const el = document.getElementById("missionComplete");
+  if (!el) return;
+
+  el.classList.remove("hidden");
+  el.classList.add("show");
+  el.setAttribute("aria-hidden", "false");
+
+  // Stronger haptic for the moment
+  haptic(60);
+
+  setTimeout(() => {
+    el.classList.remove("show");
+    el.classList.add("hidden");
+    el.setAttribute("aria-hidden", "true");
+  }, 1200);
+}
 
 // ===== Buttons =====
 document.getElementById("btnToday").addEventListener("click", () => {
@@ -205,12 +231,10 @@ document.getElementById("btnResetQuarterKPIs").addEventListener("click", () => {
   renderKpis();
 });
 
-// Close overlay when tapping outside card
 kpiOverlay.addEventListener("click", (e) => {
   if (e.target === kpiOverlay) closeKpis();
 });
 
-// Escape to close
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !kpiOverlay.classList.contains("hidden")) closeKpis();
 });
@@ -225,6 +249,7 @@ function weekKey(date = new Date()){
   const dd = String(d.getUTCDate()).padStart(2,"0");
   return `${y}-${m}-${dd}`;
 }
+
 function dayKeyToday(date = new Date()){
   const map = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   return map[date.getDay()];
@@ -243,7 +268,6 @@ function loadMissionMode(){
 }
 function saveMissionMode(v){ localStorage.setItem(MODE_KEY, String(!!v)); }
 
-// KPI storage
 function loadKpis(){
   try { return JSON.parse(localStorage.getItem(KPI_KEY) || "{}"); }
   catch { return {}; }
@@ -251,19 +275,19 @@ function loadKpis(){
 function saveKpis(s){ localStorage.setItem(KPI_KEY, JSON.stringify(s)); }
 
 function loadActiveQuarter(){
-  try { return localStorage.getItem("technician_active_quarter_v1") || "Q1"; }
+  try { return localStorage.getItem(ACTIVE_Q_KEY) || "Q1"; }
   catch { return "Q1"; }
 }
-function saveActiveQuarter(q){
-  localStorage.setItem("technician_active_quarter_v1", q);
-}
+function saveActiveQuarter(q){ localStorage.setItem(ACTIVE_Q_KEY, q); }
 
 // ===== Blocks =====
 function blockId(day, idx){ return `${day}::${idx}`; }
+
 function isDone(day, idx){
   const wk = weekKey();
   return !!(state?.[wk]?.[day]?.[blockId(day, idx)]);
 }
+
 function toggleDone(day, idx){
   const wk = weekKey();
   state[wk] ??= {};
@@ -294,6 +318,7 @@ function isDayCompleteForDate(date){
   }
   return doneCount === blocks.length;
 }
+
 function computeStreak(maxDays = 365){
   let streak = 0;
   const d = new Date();
@@ -366,11 +391,26 @@ function renderDay(){
       </div>
       <div class="badge ${cat.badge}">${cat.label}</div>
     `;
+
     row.onclick = () => {
+      // HAPTIC on every tap
+      haptic(18);
+
+      // Toggle completion
       toggleDone(selectedDay, i);
+
+      // Re-render
       renderDay();
       renderTotals();
+
+      // If day is now 100% complete → blast overlay
+      const blocksNow = SCHEDULE[selectedDay] || [];
+      const doneNow = blocksNow.reduce((acc, _, idx) => acc + (isDone(selectedDay, idx) ? 1 : 0), 0);
+      if (blocksNow.length && doneNow === blocksNow.length) {
+        showMissionComplete();
+      }
     };
+
     dayViewEl.appendChild(row);
   });
 }
@@ -423,8 +463,9 @@ function kpiCountsForQuarter(q){
 }
 
 function renderKpis(){
-  // Quarter pills
   const quarters = ["Q1","Q2","Q3","Q4"];
+
+  // Pills
   kpiQuarterPills.innerHTML = "";
   quarters.forEach(q => {
     const p = document.createElement("button");
@@ -441,6 +482,7 @@ function renderKpis(){
   // Summary
   const counts = kpiCountsForQuarter(activeQuarter);
   const pct = counts.total ? Math.round((counts.done / counts.total) * 100) : 0;
+
   kpiSummary.innerHTML = `
     <div><b>${activeQuarter} Progress:</b> ${counts.done}/${counts.total} complete • <b>${pct}%</b></div>
     <div style="margin-top:6px;">
@@ -478,7 +520,7 @@ function renderKpis(){
       row.querySelector("input").addEventListener("change", (e) => {
         kpiState[activeQuarter][key][idx] = !!e.target.checked;
         saveKpis(kpiState);
-        renderKpis(); // re-render summary + counts
+        renderKpis();
       });
 
       card.appendChild(row);
