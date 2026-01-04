@@ -198,3 +198,124 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
   letter-spacing:.3px;
 }
 .footerMark{color:var(--glowCyan)}
+
+/* =========================
+   BIGGER UI (iPhone-friendly)
+   Paste at END of style.css
+   ========================= */
+
+/* Global base size */
+body{
+  font-size: 16px;
+}
+
+/* Header */
+.top{
+  padding: 22px 18px;
+}
+h1{
+  font-size: 26px;
+  letter-spacing: 1px;
+}
+.sub{
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+/* Buttons */
+.actions{
+  gap: 10px;
+}
+.btn{
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+}
+.smallBtn{
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+/* Chips (legend) */
+.legend{
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.chip{
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 999px;
+}
+
+/* Totals panel */
+.totals{
+  padding: 16px;
+  border-radius: 18px;
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+
+/* Mission banner */
+.missionBanner{
+  padding: 14px 14px;
+  border-radius: 16px;
+  font-size: 14.5px;
+}
+
+/* Day title row */
+.dayTitle h2{
+  font-size: 18px;
+}
+.dayTitle .meta{
+  font-size: 14px;
+}
+
+/* Time blocks (big tappable cards) */
+.block{
+  padding: 16px;
+  border-radius: 18px;
+  gap: 14px;
+}
+
+/* Time column */
+.time{
+  min-width: 120px;
+  font-size: 15px;
+}
+
+/* Title + focus */
+.title{
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.focus{
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+/* Category badge */
+.badge{
+  font-size: 13.5px;
+  padding: 10px 12px;
+  border-radius: 999px;
+}
+
+/* Tabs (if not in mission mode) */
+.tab{
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 14.5px;
+}
+
+/* Make the whole app feel roomier */
+.wrap{
+  padding: 18px;
+}
+
+/* Extra: iPhone small screens (still big but prevents overflow) */
+@media (max-width: 390px){
+  h1{ font-size: 24px; }
+  .btn{ padding: 13px 14px; }
+  .time{ min-width: 112px; }
+}
