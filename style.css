@@ -10,13 +10,12 @@
   --glowCyan:#49C4D4;
   --glowPink:#D75071;
   --glowPeach:#F3A887;
-  --glowPurple:#564675;
 
   --cc:var(--glowCyan);
-  --jkd:#2ECC71;   /* readable green */
-  --rt:#F5A623;    /* readable orange */
-  --tech:#B36BFF;  /* violet */
-  --work:#6B7280;  /* grey */
+  --jkd:#2ECC71;
+  --rt:#F5A623;
+  --tech:#B36BFF;
+  --work:#6B7280;
   --neutral:#4A2A57;
 }
 
@@ -32,8 +31,11 @@ body{
     linear-gradient(180deg, #120316 0%, #170519 55%, #2A0C2A 100%);
 }
 
+.wrap{padding:18px; max-width:900px; margin:0 auto}
+
+/* Header */
 .top{
-  padding:18px 16px;
+  padding:22px 18px;
   border-bottom:1px solid rgba(73,196,212,.18);
   display:flex;
   gap:12px;
@@ -41,36 +43,34 @@ body{
   align-items:flex-start;
   backdrop-filter: blur(6px);
 }
-h1{margin:0;font-size:20px; letter-spacing:.8px}
-.sub{margin:6px 0 0;color:rgba(247,231,242,.75);font-size:13px}
+h1{margin:0;font-size:26px; letter-spacing:1px}
+.sub{margin:6px 0 0;color:rgba(247,231,242,.75);font-size:15px; line-height:1.35}
 
-.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+/* Buttons */
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .btn{
   border:1px solid rgba(73,196,212,.25);
   background:linear-gradient(180deg, rgba(44,21,51,.9), rgba(34,17,50,.9));
   color:var(--text);
-  padding:10px 12px;
-  border-radius:12px;
-  font-size:13px;
+  padding:14px 16px;
+  border-radius:14px;
+  font-size:15px;
 }
 .btn:active{transform:scale(.98)}
 .btn:hover{box-shadow: 0 0 24px rgba(73,196,212,.15)}
 .btnWarn{border-color:rgba(243,168,135,.35)}
 .btnDanger{border-color:rgba(215,80,113,.45)}
-
-/* Mission button glow */
 .btnGlow{
   border-color: rgba(73,196,212,.45);
   box-shadow: 0 0 22px rgba(73,196,212,.12);
 }
 
-.wrap{padding:16px; max-width:900px; margin:0 auto}
-
-.legend{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+/* Legend chips */
+.legend{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px}
 .chip{
-  padding:6px 10px;
+  padding:10px 14px;
   border-radius:999px;
-  font-size:12px;
+  font-size:14px;
   background:rgba(34,17,50,.75);
   border:1px solid rgba(247,231,242,.10);
 }
@@ -81,56 +81,38 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
 .chip.work{border-color:rgba(107,114,128,.45)}
 .chip.neutral{border-color:rgba(74,42,87,.55)}
 
+/* Totals panel */
 .totals{
   background:linear-gradient(180deg, rgba(34,17,50,.78), rgba(44,21,51,.65));
   border:1px solid rgba(73,196,212,.16);
-  border-radius:16px;
-  padding:12px;
+  border-radius:18px;
+  padding:16px;
   margin-bottom:12px;
   color:rgba(247,231,242,.75);
-  font-size:13px;
+  font-size:14.5px;
+  line-height:1.4;
   box-shadow: 0 0 40px rgba(215,80,113,.08);
 }
 
-/* Mission banner */
-.missionBanner{
-  margin: 10px 0 12px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(73,196,212,.22);
-  background: linear-gradient(180deg, rgba(34,17,50,.72), rgba(44,21,51,.55));
-  color: rgba(247,231,242,.78);
-  font-size: 13px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+/* Tabs */
+.tabs{
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin-bottom:12px;
 }
-.missionBanner b{ color: var(--glowCyan); letter-spacing:.3px; }
-.smallBtn{
-  border:1px solid rgba(247,231,242,.12);
-  background: rgba(18,3,22,.22);
-  color: var(--text);
-  padding: 8px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-}
-.smallBtn:active{ transform: scale(.98); }
-
-.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
 .tab{
-  padding:10px 12px;
-  border-radius:14px;
+  padding:12px 14px;
+  border-radius:16px;
   border:1px solid rgba(247,231,242,.12);
   background:rgba(34,17,50,.75);
   color:var(--text);
-  font-size:13px;
+  font-size:14.5px;
 }
 .tab.active{
   border-color: rgba(73,196,212,.38);
   box-shadow: 0 0 26px rgba(73,196,212,.12);
 }
 
+/* Day blocks */
 .day{display:flex; flex-direction:column; gap:10px}
 .dayTitle{
   display:flex;
@@ -139,17 +121,17 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
   gap:10px;
   margin:6px 2px 2px;
 }
-.dayTitle h2{margin:0;font-size:16px}
-.dayTitle .meta{color:rgba(247,231,242,.72);font-size:13px}
+.dayTitle h2{margin:0;font-size:18px}
+.dayTitle .meta{color:rgba(247,231,242,.72);font-size:14px}
 
 .block{
   background:linear-gradient(180deg, rgba(34,17,50,.82), rgba(44,21,51,.62));
   border:1px solid rgba(247,231,242,.10);
-  border-left:8px solid var(--neutral);
-  border-radius:16px;
-  padding:12px;
+  border-left:10px solid var(--neutral);
+  border-radius:18px;
+  padding:16px;
   display:flex;
-  gap:12px;
+  gap:14px;
   align-items:flex-start;
   cursor:pointer;
   user-select:none;
@@ -162,14 +144,14 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
   text-decoration:line-through;
 }
 
-.time{min-width:110px; color:var(--text); font-weight:700; font-size:13px}
+.time{min-width:120px; color:var(--text); font-weight:800; font-size:15px}
 .info{flex:1}
-.title{margin:0 0 4px; font-size:14px}
-.focus{margin:0; color:rgba(247,231,242,.72); font-size:13px}
+.title{margin:0 0 6px; font-size:16px}
+.focus{margin:0; color:rgba(247,231,242,.72); font-size:14.5px; line-height:1.35}
 
 .badge{
-  font-size:12px;
-  padding:6px 10px;
+  font-size:13.5px;
+  padding:10px 12px;
   border-radius:999px;
   border:1px solid rgba(247,231,242,.12);
   color:var(--text);
@@ -190,6 +172,7 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
 .workL{border-left-color:var(--work)}
 .neutralL{border-left-color:var(--neutral)}
 
+/* Footer */
 .footer{
   text-align:center;
   padding:18px 12px 28px;
@@ -200,122 +183,27 @@ h1{margin:0;font-size:20px; letter-spacing:.8px}
 .footerMark{color:var(--glowCyan)}
 
 /* =========================
-   BIGGER UI (iPhone-friendly)
-   Paste at END of style.css
+   MISSION MODE: SIMPLE UI
+   Hide everything except Tabs + Blocks
    ========================= */
-
-/* Global base size */
-body{
-  font-size: 16px;
+body.mission .legend,
+body.mission .totals,
+body.mission .footer{
+  display:none !important;
 }
 
-/* Header */
-.top{
-  padding: 22px 18px;
-}
-h1{
-  font-size: 26px;
-  letter-spacing: 1px;
-}
-.sub{
-  font-size: 15px;
-  line-height: 1.35;
-}
+/* Optional: keep only title + buttons (hide subtitle and reset buttons) */
+body.mission .sub{ display:none !important; }
+body.mission #btnResetDay,
+body.mission #btnResetAll{ display:none !important; }
 
-/* Buttons */
-.actions{
-  gap: 10px;
-}
-.btn{
-  padding: 14px 16px;
-  border-radius: 14px;
-  font-size: 15px;
-}
-.smallBtn{
-  padding: 12px 14px;
-  border-radius: 14px;
-  font-size: 14px;
-}
-
-/* Chips (legend) */
-.legend{
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.chip{
-  padding: 10px 14px;
-  font-size: 14px;
-  border-radius: 999px;
-}
-
-/* Totals panel */
-.totals{
-  padding: 16px;
-  border-radius: 18px;
-  font-size: 14.5px;
-  line-height: 1.4;
-}
-
-/* Mission banner */
-.missionBanner{
-  padding: 14px 14px;
-  border-radius: 16px;
-  font-size: 14.5px;
-}
-
-/* Day title row */
-.dayTitle h2{
-  font-size: 18px;
-}
-.dayTitle .meta{
-  font-size: 14px;
-}
-
-/* Time blocks (big tappable cards) */
-.block{
-  padding: 16px;
-  border-radius: 18px;
-  gap: 14px;
-}
-
-/* Time column */
-.time{
-  min-width: 120px;
-  font-size: 15px;
-}
-
-/* Title + focus */
-.title{
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-.focus{
-  font-size: 14.5px;
-  line-height: 1.35;
-}
-
-/* Category badge */
-.badge{
-  font-size: 13.5px;
-  padding: 10px 12px;
-  border-radius: 999px;
-}
-
-/* Tabs (if not in mission mode) */
-.tab{
-  padding: 12px 14px;
-  border-radius: 16px;
-  font-size: 14.5px;
-}
-
-/* Make the whole app feel roomier */
-.wrap{
-  padding: 18px;
-}
-
-/* Extra: iPhone small screens (still big but prevents overflow) */
-@media (max-width: 390px){
-  h1{ font-size: 24px; }
-  .btn{ padding: 13px 14px; }
-  .time{ min-width: 112px; }
+/* Make tabs the primary control in Mission Mode */
+body.mission .tabs{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding-top: 10px;
+  padding-bottom: 12px;
+  background: linear-gradient(180deg, rgba(18,3,22,.85), rgba(18,3,22,0));
+  backdrop-filter: blur(6px);
 }
