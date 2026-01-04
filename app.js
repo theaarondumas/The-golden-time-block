@@ -1,7 +1,8 @@
-// THE TECHNICIAN — Weekly Discipline (tap-to-complete, Mission Mode + Streaks)
-const STORAGE_KEY = "technician_weekly_timeblocks_v1";
-const MODE_KEY = "technician_mission_mode_v1";
-const STREAK_BEST_KEY = "technician_best_streak_v1";
+// THE TECHNICIAN — Weekly Discipline
+// Tap-to-complete + Mission Mode (simple UI) + Streak Counter
+const STORAGE_KEY = "technician_weekly_timeblocks_v2";
+const MODE_KEY = "technician_mission_mode_v2";
+const STREAK_BEST_KEY = "technician_best_streak_v2";
 
 const CATS = {
   crash: { label: "Crash Cart", badge: "cc", left: "ccL" },
@@ -12,7 +13,7 @@ const CATS = {
   other: { label: "Other",      badge: "neutral", left: "neutralL" }
 };
 
-// Schedule (edit anytime)
+// Schedule
 const SCHEDULE = {
   Mon: [
     { time:"4:15–4:45 AM", title:"Prime Body", focus:"Mobility + breath", cat:"other" },
@@ -44,7 +45,7 @@ const SCHEDULE = {
   Sun: [
     { time:"Morning", title:"Walk + Journal", focus:"Reset", cat:"other" },
     { time:"60 mins", title:"Weekly Review", focus:"Wins, cuts, adjust next week", cat:"other" },
-    { time:"(Optional) 1 hr", title:"Resistance Training", focus:"Light pump + mobility (counts toward 6 days)", cat:"rt" }
+    { time:"(Optional) 1 hr", title:"Resistance", focus:"Light pump + mobility", cat:"rt" }
   ]
 };
 
@@ -72,7 +73,6 @@ document.getElementById("btnToday").addEventListener("click", () => {
 document.getElementById("btnMission").addEventListener("click", () => {
   missionMode = !missionMode;
   saveMissionMode(missionMode);
-  if (missionMode) selectedDay = dayKeyToday();
   render();
 });
 
@@ -92,12 +92,12 @@ document.getElementById("btnResetAll").addEventListener("click", () => {
   render();
 });
 
-// ===== Keys / Dates =====
+// ===== Dates =====
 function weekKey(date = new Date()){
-  // Monday-based week key (UTC) to be stable
+  // Monday-based week key (UTC)
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  const day = d.getUTCDay() || 7; // 1..7
-  d.setUTCDate(d.getUTCDate() - (day - 1)); // back to Monday
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() - (day - 1));
   const y = d.getUTCFullYear();
   const m = String(d.getUTCMonth()+1).padStart(2,"0");
   const dd = String(d.getUTCDate()).padStart(2,"0");
@@ -151,10 +151,6 @@ function setBestStreak(v){
   localStorage.setItem(STREAK_BEST_KEY, String(v));
 }
 
-/**
- * A day is "complete" when ALL blocks for that day are done.
- * Requires at least 1 block to avoid counting empty days.
- */
 function isDayCompleteForDate(date){
   const dayKey = dayKeyToday(date);
   const blocks = SCHEDULE[dayKey] || [];
@@ -170,9 +166,6 @@ function isDayCompleteForDate(date){
   return doneCount === blocks.length;
 }
 
-/**
- * Streak = consecutive fully-complete days ending today.
- */
 function computeStreak(maxDays = 365){
   let streak = 0;
   const d = new Date();
@@ -185,7 +178,7 @@ function computeStreak(maxDays = 365){
   return streak;
 }
 
-// ===== UI Render =====
+// ===== UI =====
 function updateMissionButton(){
   const btn = document.getElementById("btnMission");
   if (!btn) return;
@@ -193,33 +186,24 @@ function updateMissionButton(){
 }
 
 function renderTabs(){
-  if (missionMode) { tabsEl.innerHTML = ""; return; }
   const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   tabsEl.innerHTML = "";
   days.forEach(d => {
     const btn = document.createElement("button");
     btn.className = "tab" + (d === selectedDay ? " active" : "");
     btn.textContent = d + (d === dayKeyToday() ? " •" : "");
-    btn.dataset.day = d;
     btn.onclick = () => { selectedDay = d; render(); };
     tabsEl.appendChild(btn);
   });
 }
 
 function renderTotals(){
-  // Update best streak
-  const currentStreak = computeStreak();
+  // Best streak updates silently (even though totals may be hidden in mission mode)
+  const current = computeStreak();
   const best = getBestStreak();
-  if (currentStreak > best) setBestStreak(currentStreak);
+  if (current > best) setBestStreak(current);
 
-  const banner = missionMode ? `
-    <div class="missionBanner">
-      <div><b>MISSION MODE</b> — Today only. No tabs. Just execute.</div>
-      <button class="smallBtn" id="btnExitMission">Exit</button>
-    </div>
-  ` : ``;
-
-  totalsEl.innerHTML = `${banner}
+  totalsEl.innerHTML = `
     <div><b>This week (target totals)</b></div>
     <div style="margin-top:6px;">
       🔵 Crash Cart: <b>18–22 hrs</b> &nbsp;|&nbsp;
@@ -231,20 +215,9 @@ function renderTotals(){
     <div style="margin-top:6px;">Week starts: <b>${weekKey()}</b></div>
     <div style="margin-top:8px;">🔥 Streak: <b>${computeStreak()}</b> days &nbsp;|&nbsp; 🏆 Best: <b>${getBestStreak()}</b></div>
   `;
-
-  const exitBtn = document.getElementById("btnExitMission");
-  if (exitBtn) {
-    exitBtn.onclick = () => {
-      missionMode = false;
-      saveMissionMode(false);
-      render();
-    };
-  }
 }
 
 function renderDay(){
-  if (missionMode) selectedDay = dayKeyToday();
-
   const blocks = SCHEDULE[selectedDay] || [];
   const doneCount = blocks.reduce((acc, _, i) => acc + (isDone(selectedDay, i) ? 1 : 0), 0);
   const pct = blocks.length ? Math.round((doneCount / blocks.length) * 100) : 0;
@@ -268,17 +241,21 @@ function renderDay(){
       </div>
       <div class="badge ${cat.badge}">${cat.label}</div>
     `;
-    row.onclick = () => { toggleDone(selectedDay, i); renderDay(); renderTotals(); };
+    row.onclick = () => {
+      toggleDone(selectedDay, i);
+      renderDay();
+      renderTotals(); // keep streak updates accurate
+    };
     dayViewEl.appendChild(row);
   });
 }
 
 function render(){
+  document.body.classList.toggle("mission", missionMode);
   updateMissionButton();
   renderTotals();
   renderTabs();
   renderDay();
 }
 
-// Init
 render();
