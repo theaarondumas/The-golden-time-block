@@ -143,6 +143,7 @@ h1{margin:0;font-size:26px; letter-spacing:1px}
   align-items:flex-start;
   cursor:pointer;
   user-select:none;
+  transition: transform .08s ease, box-shadow .2s ease, opacity .2s ease, filter .2s ease;
 }
 .block:active{transform:scale(.995)}
 .block:hover{box-shadow: 0 0 30px rgba(215,80,113,.10)}
@@ -242,7 +243,7 @@ body.mission .tabs{
 }
 .overlayTitle{
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: .3px;
 }
 .overlaySub{
@@ -317,9 +318,7 @@ body.mission .tabs{
   padding: 10px 8px;
   border-radius: 14px;
 }
-.kpiItem:hover{
-  background: rgba(73,196,212,.06);
-}
+.kpiItem:hover{ background: rgba(73,196,212,.06); }
 .kpiItem input{
   transform: scale(1.2);
   margin-top: 2px;
@@ -333,4 +332,39 @@ body.mission .tabs{
   margin-top: 12px;
   display:flex;
   justify-content:flex-end;
+}
+
+/* =========================
+   MISSION COMPLETE (sideways, full screen)
+   ========================= */
+.mc{
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,2,12,.72);
+  backdrop-filter: blur(8px);
+}
+.mcText{
+  font-weight: 1000;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  font-size: clamp(44px, 8vw, 96px);
+  color: rgba(73,196,212,.95);
+  text-shadow:
+    0 0 20px rgba(73,196,212,.22),
+    0 0 40px rgba(215,80,113,.14),
+    0 0 60px rgba(243,168,135,.10);
+  transform: rotate(-90deg);
+  opacity: .98;
+}
+.mc.show .mcText{
+  animation: mcPop 900ms ease forwards;
+}
+@keyframes mcPop{
+  0%{ transform: rotate(-90deg) scale(.92); opacity: 0; }
+  35%{ transform: rotate(-90deg) scale(1.04); opacity: 1; }
+  100%{ transform: rotate(-90deg) scale(1.00); opacity: 1; }
 }
